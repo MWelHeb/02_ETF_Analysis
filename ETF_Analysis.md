@@ -24,7 +24,22 @@ A further and more detailed description of these python script is given below.
 
 As always the initial step is about getting data concerning the topic of interest, in this case ETF. When searching the internet you find a large variety of potential libraries which offer an interface to financial data. E.g. one source is the library [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/index.html) which offers accesss to various (financial) datasources. After some Google search I decided to use the package [investpy](https://investpy.readthedocs.io/index.html) due to its documentation which I found helpfull and the easy access to a wide range of ETS in this library. According to the documentation library investpy retrieves data from the finance portal [investing.com](https://www.investing.com/). After having installed investpy in the usual manner you can import the library and use the various functionalities to retrieve recent and historical data from indexed financial products. 
 
-In a first step I would like to draw the attention to the following function which allows to search relevant EFT by name components. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). 
+In a first step I would like to draw the attention to the following function which allows to search relevant ETF by components of its name. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). So in a first step I would like to create a universe of ETF which are issued by Blackrock and therefore named iShares:
+
+```
+import investpy
+import pandas as pd
+from pandas import DataFrame
+
+locpath1 = "C:/Users/Marc Wellner/01_projects/streamlit/02_finance_app/01_data/"
+
+pd.set_option('display.max_columns', 100)
+etf_univ_ishares = investpy.etfs.search_etfs("name", "iShares")
+etf_univ_ishares.to_excel(locpath1+"01_etf_univ_ishares.xlsx", sheet_name='Tabelle1')
+print(etf_univ_ishares)
+```
+
+
 
 
 
