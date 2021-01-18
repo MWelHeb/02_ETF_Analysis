@@ -24,7 +24,7 @@ A further and more detailed description of these python script is given below.
 
 As always the initial step is about getting data concerning the topic of interest, in this case ETF. When searching the internet you find a large variety of potential libraries which offer an interface to financial data. E.g. one source is the library [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/index.html) which offers accesss to various (financial) datasources. After some Google search I decided to use the package [investpy](https://investpy.readthedocs.io/index.html) due to its documentation which I found helpfull and the easy access to a wide range of ETF in this library. According to the documentation library investpy retrieves data from the finance portal [investing.com](https://www.investing.com/). After having installed investpy in the usual manner you can import the library and use the various functionalities to retrieve recent and historical data from indexed financial products. 
 
-In a first step I would like to draw the attention to the following function "investpy.etfs.search_etfs("name", "xxx")" which allows to search relevant ETF by components of its name. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). So in a first step I would like to create a universe of ETF which are issued by Blackrock and therefore named iShares. Moreover I added some further attributes describing the ETF investment strategy and which is based on information within the attribute name.
+In a first step I would like to draw the attention to the following function [investpy.etfs.search_etfs(by, value)](https://investpy.readthedocs.io/_api/etfs.html?) which allows to search relevant ETF by components of its name. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). So in a first step I would like to create a universe of ETF which are issued by Blackrock and therefore named iShares. Moreover I added some further attributes describing the ETF investment strategy and which is based on information within the attribute name.
 
 ```
 import investpy
@@ -83,5 +83,76 @@ After having extracted this broad datasheet with different ETF and of course hav
 - iShares MDAX UCITS DE
 - iShares TecDAX UCITS
 ```
+
+The following script aims to extract for these 8 selected ETF a data set which contains for each ETF a time series of daily closing prices for a given time period starting 
+2010-01-01 and ending today. For that purpose the function [investpy.etfs.get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily')](https://investpy.readthedocs.io/_api/etfs.html?) is used.
+
+
+
+```
+# (1) Time series of x selected ETF
+
+# (a) Selected ETF
+etf_lst = ['iShares Core MSCI World UCITS',
+           'iShares Core S&P 500 UCITS',
+           'iShares NASDAQ-100 UCITS',
+           'iShares EURO STOXX 50 UCITS',
+           'iShares MSCI China A UCITS USD',
+           'iShares Core DAX UCITS',
+           'iShares MDAX UCITS DE',
+           'iShares TecDAX UCITS']
+
+etf_sc_lst = ['MSCIWorld', 
+              'SP500',
+              'NASDAQ100',
+              'EURO50',
+              'MSCIChina',
+              'DAX',
+              'MDAX',
+              'TDAX']
+
+etf_ctry_lst = ['united kingdom',
+                'united kingdom',
+                'germany',
+                'germany',
+                'germany',
+                'germany',
+                'germany',
+                'germany']
+
+etf_num = ['etf1',
+           'etf2',
+           'etf3',
+           'etf4',
+           'etf5',
+           'etf6',
+           'etf7',
+           'etf8']
+
+etf_seli = {'etf_nm': etf_lst, 'etf_sc': etf_sc_lst, 'etf_ctry': etf_ctry_lst}
+etf_univ = pd.DataFrame(etf_seli, columns = ['etf_nm','etf_sc', 'etf_ctry'], index=etf_num)
+etf_univ.to_excel(locpath1+"etf_univ.xlsx", sheet_name='Tabelle1')
+
+
+# (b) Selected Timeframe
+ds1 = date.fromisoformat('2010-01-01').strftime("%d/%m/%Y")
+ds2 = date.today().strftime("%d/%m/%Y")
+
+rows, cols = etf_univ.shape
+my_etf = pd.DataFrame({'A' : []})
+for x in range(0, rows):
+    print("We're on etf %d" % (x))
+    print(etf_univ.iat[x,1])
+    my_etf_c = investpy.etfs.get_etf_historical_data(etf = etf_univ.iat[x,0],country = etf_univ.iat[x,2], from_date=ds1, to_date=ds2, stock_exchange=None, as_json=False, order='ascending', interval='Daily')    
+    my_etf_c = my_etf_c.loc[:,['Close']]            
+    my_etf_c = my_etf_c.rename(columns={"Close": etf_univ.iat[x,1]})
+    my_etf = pd.concat([my_etf, my_etf_c], axis = 1)
+
+my_etf = my_etf.drop(columns=['A'])
+#my_etf = my_etf.rename(columns={"Unnamed: 0": "datum"})
+my_etf.to_excel(locpath1+"my_etf.xlsx", sheet_name='Tabelle1')
+```
+
+
 
 
