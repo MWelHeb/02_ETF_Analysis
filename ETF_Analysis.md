@@ -146,8 +146,10 @@ for x in range(0, rows):
     my_etf_c = my_etf_c.rename(columns={"Close": etf_univ.iat[x,1]})
     my_etf = pd.concat([my_etf, my_etf_c], axis = 1)
 
+my_etf = my_etf.reset_index()
 my_etf = my_etf.drop(columns=['A'])
-#my_etf = my_etf.rename(columns={"Unnamed: 0": "datum"})
+my_etf = my_etf.rename(columns={"index": "datum"})
+#my_etf
 my_etf.to_excel(locpath1+"my_etf.xlsx", sheet_name='Tabelle1')
 ```
 
