@@ -71,6 +71,9 @@ etf_univsel.loc[etf_univsel['name'].str.contains('MSCI World UCITS'),'etf_cat']=
 etf_univsel.to_excel(locpath1+"etf_univsel.xlsx", sheet_name='Tabelle1')
 ```
 
+After having extracted this broad datasheet with different ETF I manually selected 8 ETF which I was interested in analyzing in more detail. The 8 ETF were the following:
+
+```
 
 
 
