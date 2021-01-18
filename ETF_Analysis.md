@@ -85,9 +85,7 @@ After having extracted this broad datasheet with different ETF and of course hav
 ```
 
 The following script aims to extract for these 8 selected ETF a data set which contains for each ETF a time series of daily closing prices for a given time period starting 
-2010-01-01 and ending today. For that purpose the function [investpy.etfs.get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily')](https://investpy.readthedocs.io/_api/etfs.html?) is used.
-
-
+2010-01-01 and ending today. For that purpose the function [investpy.etfs.get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily')](https://investpy.readthedocs.io/_api/etfs.html?) is used. The extracted data set is then stored for further usage in an Excel file called my_etf.xls.
 
 ```
 # (1) Time series of x selected ETF
