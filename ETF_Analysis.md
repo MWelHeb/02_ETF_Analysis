@@ -15,8 +15,8 @@ Next data science area which I was interested in related to the topic of finance
 
 The following python scripts contain the various steps of the data analysis which have been conducted: 
 
-- [Data Preparation - Select large ETF Universe](select_large_EFT_universe.py)
-- [Data Preparation - Generate data for selected ETF](generate_ETF_universe_data_v1.py)
+- [Data Preparation (step 1) - Select large ETF Universe](select_large_EFT_universe.py)
+- [Data Preparation (step 2) - Generate data for selected ETF](generate_ETF_universe_data_v1.py)
 
 A further and more detailed description of these python script is given below.
 
