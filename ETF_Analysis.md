@@ -156,12 +156,12 @@ my_etf = my_etf.rename(columns={"index": "datum"})
 my_etf.to_excel(locpath1+"my_etf.xlsx", sheet_name='Tabelle1')
 ```
 
+
 #### <a name="id2b"></a>2b - Web Application [(Back to the Top)](#id0)
 
-Finally after a data set of closing prices for the 8 ETF mentions above has been created the next step is concerned with setting up a platform which allows to analyze and visualize the development of these ETF. This is the point where [streamlit](https://www.streamlit.io/) comes into play again. In a very first step the two Excel files which contain information about the 8 ETF are beeing loaded. Then 
+Finally after a data set of closing prices for the 8 ETF mentions above has been created the next step is concerned with setting up a platform which allows to analyze and visualize the development of these ETF. This is the point where [streamlit](https://www.streamlit.io/) comes into play again. In a very first step the two Excel files which contain information about the 8 ETF are beeing loaded. 
 
 ```
-
 import streamlit as st
 #import yfinance as yf
 import pandas as pd
@@ -185,8 +185,13 @@ locpath1 = "C:/Users/Marc Wellner/01_projects/streamlit/02_finance_app/01_data/"
 etf_univ = pd.read_excel(locpath1+"etf_univ.xlsx", keep_default_na=False)
 my_etfu = pd.read_excel(locpath1+"my_etf.xlsx", keep_default_na=False)
 
+```
 
 
+Then the script defines the user input parameter, i.e. a select box for ETF to be looked at as well as a time span to be analyzed. These input parameters will give the user a large flexiblity in terms of individually selecting his/her perspective of analysis.
+
+
+```
 #################(2) Select Boxes (a) ETF (b) Time  
 
 st.title('ETF Analysis')
@@ -235,6 +240,13 @@ dus2 = du2.strftime("%d/%m/%Y")
 #st.write(dus1)
 #st.write(dus2)
 
+```
+
+
+
+
+
+```
 #################(3) Load User selected Data
 
 etf_univ_sel = etf_univ[etf_univ['etf_nm'].isin(ulst)]
