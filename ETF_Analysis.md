@@ -74,7 +74,7 @@ etf_univsel.loc[etf_univsel['name'].str.contains('MSCI World UCITS'),'etf_cat']=
 etf_univsel.to_excel(locpath1+"etf_univsel.xlsx", sheet_name='Tabelle1')
 ```
 
-After having extracted this broad datasheet with different ETF and of course having some own ideas regarding an investment strategy in mind I did some furhter research and based on this process manually selected 8 ETF which I wanted to analyze in more detail. These 8 ETF focused on equities (e.g. instead ob bonds) and differntiated somehow by region, company size and sector (e.g. technology). Following ETF were selected:
+After having extracted this very broad datasheet with many different ETF I did some further research - of course based on some own ideas regarding an investment strategy. Based on this process I than manually selected 8 ETF which I wanted to analyze further and in more detail. These 8 ETF focused on equities (e.g. instead of bonds) and differntiated somehow by region, company size and sector (e.g. technology). Following ETF were selected:
 
 ```
 - iShares Core MSCI World UCITS
