@@ -449,11 +449,15 @@ st.subheader('... for an investment of $100.000 following allocation of ETF amou
 alloc_opt_pf
 ```
 
-Of course, there are many more potential directions for further statistic and econometric analysis, such as analyzing ETF returns and their volatility by means time series models (e.g. ARMA, GARCH, etc.).
+Of course, there are many more potential directions for a further statistic and econometric analysis, such as analyzing ETF returns and their volatility by means time series models (e.g. ARMA, GARCH, etc.) but this will be done in another project :-).
 
 Below you find some screen shots for the streamlit app described above. 
+![Scree1](screen_shot1.png)
+![Scree2](screen_shot2.png)
+![Scree3](screen_shot3.png)
+![Scree4](screen_shot4.png)
 
 
+Similar to the project "covid scan app" I have transferred to whole process in an automated manner to a cloud environment. The respective link is found here:
 
 
-Similar to the covid scan app I have transferred to whole process in an automated manner to a cloud environment. The respective link is found here
