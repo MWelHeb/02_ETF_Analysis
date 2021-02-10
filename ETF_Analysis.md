@@ -9,25 +9,25 @@
 ### -----------------------------------------------------------------------------------------------------------------------------
 ### <a name="id1"></a>1 - Starting point [(Back to the Top)](#id0)
 
-Next data science area which I was interested in related to the topic of finance. When it comes to investing money many advices center around investments into ETF (i.e. exhange traded funds vs. e.g. single stocks). Therefore I wanted to get a better understanding on the variety of ETS and their historical developments. How did the prices of different ETF develope in recent years? Which ETF had a large (annual) return over a given time period? How volatile were these returns? What is the ratio between return and volatility for a given ETF. Is there a strong postive/negative correlation amongst the returns of different ETF? 
+Next data science area which I was interested in related to the topic of finance. When it comes to investing money many advices center around investments into ETF (i.e. exchange traded funds vs. e.g. single stocks). Therefore I wanted to get a better understanding on the variety of ETFs and their historical developments. How did the prices of different ETF develop in recent years? Which ETF had a large (annual) return over a given time period? How volatile were these returns? What is the ratio between return and volatility for a given ETF. Is there a strong positive/negative correlation amongst the returns of different ETF? 
 
-Again, like in any data science project the first step centers around data: Where do I get appropriate data - ideally in a very automated way and always up to date? Once an interface to the relevant data source is available much work has to be conducted around the topic of analyzing this data, i.e. data preparation, applying statistical/econometric methods, presentation and visualization of results, interpretation, etc..  
+Again, like in any data science project the first step centers around data: Where do I get appropriate data - ideally in a very automated way and always up to date? Once an interface to the relevant data source is available much work has to be conducted around the topic of analyzing this data, i.e. data preparation, applying statistical/econometric methods, presentation and visualization of results, interpretation, etc..
 
 ### <a name="id2"></a>2 - Data analysis [(Back to the Top)](#id0)
 
-The following python scripts contain the various steps of the data preparation and analysis which have been conducted: 
+The following python scripts contain the various steps of the data preparation (step 1 & 2) and analysis (step 3) which have been conducted: 
 
-- [Data Preparation (step 1) - Select large ETF Universe](01_select_large_EFT_universe.py)
-- [Data Preparation (step 2) - Generate data for selected ETF](02_generate_ETF_universe_data_v1.py)
-- [Analyze Data - Conduct simple interactive analysis/visualization for selected ETF](03_analyse_ETF.py)
+- [Data Preparation (step 1) – Select a large ETF Universe](01_select_large_EFT_universe.py)
+- [Data Preparation (step 2) - Generate data for selected ETFs](02_generate_ETF_universe_data_v1.py)
+- [Analyze Data (step 3) - Construct a simple interactive platform to analyze/visualize selected ETFs](03_analyse_ETF.py)
 
 A further and more detailed description of these python script is given below.
 
 #### <a name="id32"></a>2a - Data Preparation [(Back to the Top)](#id0)
 
-As always the initial step is about getting data concerning the topic of interest, in this case ETF. When searching the internet you find a large variety of potential libraries which offer an interface to financial data. E.g. one source is the library [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/index.html) which offers accesss to various (financial) data sources. After some Google search I decided to use the package [investpy](https://investpy.readthedocs.io/index.html) due to its documentation which I found helpfull and the easy access to a wide range of ETF in this library. According to its documentation the library investpy retrieves data from the finance portal [investing.com](https://www.investing.com/). After having installed investpy in the usual manner you can import the library and use the various functionalities to retrieve recent and historical data from indexed financial products. 
+As always, the initial step is about getting data concerning the topic of interest, in this case ETF. When searching in the internet you find a large variety of potential libraries which offer an interface to financial data. E.g. one source is the library [pandas-datareader](https://pandas-datareader.readthedocs.io/en/latest/index.html) which offers access to various (financial) data sources. After some search in Google I decided to use the package [investpy](https://investpy.readthedocs.io/index.html) due to its documentation which I found helpful as well as the easy access to a wide range of ETFs in this library. According to its documentation the library investpy retrieves data from the finance portal [investing.com](https://www.investing.com/). After having installed investpy in the usual manner you can import the library and use the various functionalities to retrieve recent and historical data from indexed financial products. 
 
-In a first step I would like to draw the attention to the following function [investpy.etfs.search_etfs(by, value)](https://investpy.readthedocs.io/_api/etfs.html?) which allows to search relevant ETF by components of its name. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). So in a first step I would like to create a universe of ETF which are issued by Blackrock and therefore named iShares. Moreover I added some further attributes describing the ETF investment strategy and which is based on information within the attribute name.
+In a first step I would like to draw the attention to the following function [investpy.etfs.search_etfs(by, value)](https://investpy.readthedocs.io/_api/etfs.html?) which allows to search relevant ETF by components of its name. In that regards it might be good to know that the name of an ETF provides a large amount of information, such as issuing company (e.g. iShares, Xtrackers, etc.), index name (e.g. MSCI World, S&P 500, DAX, etc.) and regulatory aspects (e.g. UCITS) etc.. For a good explanation on this topic look for example [here](https://www.justetf.com/de/news/etf/wie-sie-etf-namen-einfach-entschluesseln.html). As you can see in the program my initial goal was to get an extract/universe of ETF which are issued by Blackrock and hence were named iShares. Moreover, I added some further attributes describing the ETF investment strategy (e.g. type of index, region, etc.). This information could also easily be obtained by scanning the ETF name for different words.
 
 ```
 import investpy
@@ -74,7 +74,7 @@ etf_univsel.loc[etf_univsel['name'].str.contains('MSCI World UCITS'),'etf_cat']=
 etf_univsel.to_excel(locpath1+"etf_univsel.xlsx", sheet_name='Tabelle1')
 ```
 
-After having extracted this very broad datasheet of almost 2.000 different ETF which was stored in an Excel file called etf_univsel.xlsx I did some further research obiously based on own ideas regarding an appropriate investment strategy. This process then led to a manual selection of 8 ETF which I wanted to analyze further and in more detail. These 8 ETF focus on equities (e.g. instead of bonds) and differntiate somehow by region, company size and sector (e.g. technology). Following ETF were selected:
+After having extracted this very broad datasheet of almost 2.000 different ETF from iShares which was then stored in an Excel file called etf_univsel.xlsx I did some further manual research obviously based on own ideas regarding an appropriate investment strategy (e.g. with regards to index, region, sectors, etc.). This process then led to a selection of 8 ETF which I wanted to analyze further and in more detail. These 8 ETF focus on equities (e.g. instead of bonds) and differentiate somehow by region, company size and sector (e.g. technology). Following ETF were selected:
 
 ```
 - iShares Core MSCI World UCITS
@@ -87,8 +87,7 @@ After having extracted this very broad datasheet of almost 2.000 different ETF w
 - iShares TecDAX UCITS
 ```
 
-The following script aims to extract for these 8 selected ETF a data set which contains for each ETF a time series of daily closing prices for a given time period starting 
-2010-01-01 and ending today. For that purpose the function [investpy.etfs.get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily')](https://investpy.readthedocs.io/_api/etfs.html?) is used. The extracted data set of ETF names and abvriviations is then stored for further usage in an Excel file called etf_univ.xlsx and the data set with the historical daily developments of closing prices is stored in the Excel file my_etf.xls.
+The following script aims to extract for these 8 selected ETF a data set which contains for each ETF a time series of daily closing prices for a given time period starting 2010-01-01 and ending today. For that purpose the function [investpy.etfs.get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily')](https://investpy.readthedocs.io/_api/etfs.html?) is used. The extracted data set of ETF names and abbreviations is then stored for further usage in an Excel file called etf_univ.xlsx and the data set which contains the historical daily developments of closing prices is stored in the Excel file my_etf.xls.
 
 ```
 # (1) Time series of x selected ETF
@@ -159,7 +158,7 @@ my_etf.to_excel(locpath1+"my_etf.xlsx", sheet_name='Tabelle1')
 
 #### <a name="id2b"></a>2b - Web Application [(Back to the Top)](#id0)
 
-Finally after a data set of closing prices for the 8 ETF mentions above has been created the next step is concerned with setting up a platform which allows to analyze and visualize the development of these ETF. This is the point where [streamlit](https://www.streamlit.io/) comes into play again. In a very first step the two Excel files which contain information about the 8 ETF are beeing loaded. 
+Finally, after a data set of closing prices for the 8 ETF mention above has been created the next step is concerned with setting up a platform which allows to analyze and visualize the development of these ETF. This is the point where [streamlit](https://www.streamlit.io/) comes into play again. In a very first step the two Excel files which contain information about the 8 ETF are being loaded. 
 
 ```
 import streamlit as st
@@ -187,9 +186,7 @@ my_etfu = pd.read_excel(locpath1+"my_etf.xlsx", keep_default_na=False)
 
 ```
 
-
-Then the script defines the user input parameter, i.e. a select box for ETF to be looked at as well as a time span to be analyzed. These input parameters will give the user a large flexiblity in terms of individually selecting his/her perspective of analysis.
-
+In the further part of the script the user input parameter are being defined. I.e. a select box for ETF is set up at as well as the starting and end date to define the time span which the user wants to analyze. These input parameters give users a large flexibility in terms of individually selecting his/her perspective on the analysis/visualization of ETF.
 
 ```
 #################(2) Select Boxes (a) ETF (b) Time  
@@ -242,9 +239,7 @@ dus2 = du2.strftime("%d/%m/%Y")
 
 ```
 
-
-
-
+With user input parameters at hand the next part of the script is concerned with loading this specific user selected data and displaying the raw price data of the selected ETF. This can be done in a straight forward manner by using the streamlit function st.write. Moreover, an index for each ETF is being calculate where starting point of the time span refers to 1. This index shall help to compare price developments amongst the different ETF. Finally, the daily returns are being calculated and displayed for each selected ETF.
 
 ```
 #################(3) Load User selected Data
@@ -280,6 +275,11 @@ st.subheader('Raw data returns')
 my_etf_r = my_etf.pct_change()
 st.write(my_etf_r)
 
+```
+
+The next part of the script is concerned with plotting the data mentioned above. Here the streamlit function st.pyplot is being used
+
+```
 #################(4) Plot Time series 
 #### (a)price
 st.subheader('Time series plots')
@@ -327,8 +327,11 @@ plt.legend(my_etf_i.columns.values, loc='upper left')
 plt.show()
 
 st.pyplot(fig)
+```
 
+The next section of the script aims to calculate the annual returns and volatility for each ETF over the selected time span. Moreover the return and volatility of an equally weighted portfolio of the selected ETF is being calculated too. These figures are then loaded into a data frame which is displayed to the user by means of the streamlit function st.write.
 
+```
 ###############(5) Caluclation of Annual Returns and Volatility 
 
 #### Returns
@@ -359,7 +362,7 @@ weights = [1/etf_amt] * etf_amt
 #print(weights)
 #weights
 
-####Retunr
+####Return
 port_return = np.sum(my_etf_r.mean()*weights)*252
 #port_return
 
@@ -382,9 +385,11 @@ my_etf_kpi = my_etf_kpi.append(my_etfpf_kpi)
 
 st.subheader('Annual returns vs. volatility for ETFs vs equally weighted Portfolio')
 st.write(my_etf_kpi)
+```
 
+Finally, in the last part of the script library [PyPortfolioOpt]( https://pyportfolioopt.readthedocs.io/en/latest/) is being used in order to look at the selected ETF from a portfolio optimisation perspective (i.e. in terms of risk-efficiency) using e.g. classical efficient frontier techniques and Black-Litterman allocation. Obviously in a very first step the library has to be install in the usual manner and then the respective functions need to be included in the script. As output the user will get information on the return and volatility of the optimal portfolio as well as the weighting of the ETF which are included into the portfolio optimization. Finally, for a hypothetical investment of $100.000 the optimal allocation of ETF amounts is being displayed.
 
-
+```
 #### (7) Optimal Portfolio (according to "Efficient Frontier")
 
 
@@ -444,5 +449,11 @@ st.subheader('... for an investment of $100.000 following allocation of ETF amou
 alloc_opt_pf
 ```
 
+Of course, there are many more potential directions for further statistic and econometric analysis, such as analyzing ETF returns and their volatility by means time series models (e.g. ARMA, GARCH, etc.).
+
+Below you find some screen shots for the streamlit app described above. 
 
 
+
+
+Similar to the covid scan app I have transferred to whole process in an automated manner to a cloud environment. The respective link is found here
