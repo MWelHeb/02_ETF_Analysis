@@ -458,8 +458,6 @@ Below you find some screen shots for the streamlit app described above.
 ![Scree4](screen_shot4.png)
 
 
-Similar to the project "covid scan app" I have transferred to whole process in an automated manner to a cloud environment. The respective link is found here:
-
-- [Application: ETF Analysis](http://18.192.208.203:8502/)
+Similar to the project "covid scan app" I have transferred to whole process in an automated manner to a cloud environment. The respective link is found here: [Application: ETF Analysis](http://18.192.208.203:8502/)
 
 
