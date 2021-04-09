@@ -1,5 +1,5 @@
 
-<img src = "etf.jfif" width="250"><img src = "screen_shot2_v1.png" width="200"><img src = "screen_shot4_v1.png" width="200"><img src = "finance.jfif" width="250">
+<img src = "etf.jfif" width="350"><img src = "screen_shot2_v1.png" width="200"><img src = "screen_shot4_v1.png" width="200"><img src = "finance.jfif" width="350">
 
 # <a name="id0"></a>Analyzing ETF with Python 
 
